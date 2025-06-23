@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import uvicorn
 from random import randint
+import json
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./static"), name="static")
@@ -16,6 +17,12 @@ def root(request: Request):
 @app.get("/index2")
 def index2(request: Request):
     return templates.TemplateResponse(request=request, name="index2.html")
+
+@app.post("/test_post")
+async def test_post(request: Request):
+    bb = await request.body()
+    print(bb)
+    print("OK")
 
 @app.get("/test_json")
 def test_json(reques: Request):
